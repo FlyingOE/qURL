@@ -8,6 +8,9 @@ But as mentioned in the [documentation](https://code.kx.com/v2/kb/ssl/#suitabili
 
 qURL aims to work around both of these problems by using the popular [libcurl](https://curl.haxx.se/libcurl/) to do the heavy lifting.
 
+### Rant
+As much as I love the simplicity of q, I hate the k-like code format in Kx's Java/C code. [curl.c](repo/blob/master/curl.c) here has, thus, been heavily reformatted before addition of extra features. `^_*`
+
 ## Why `curl.c`
 Given the specific requirements of my project, I need only a thin wrapper around libcurl to perform simple concurrent HTTPS queries. Kx's sample implementation, while simplistic, is a very good starting point.
 
