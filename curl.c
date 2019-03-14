@@ -2,8 +2,8 @@
 //gcc -DKXVER=3 curl.c -o curl.so -lcurl -fPIC -shared
 //{x set`:./curl 2:x,y}'[`cget`cpost;1 2]
 //cget"http://kx.com"
-#include<curl/curl.h>
-#include"k.h"
+//2019.03.13 - reformat source code
+#include "./curl.h"
 
 #define so(c,o,v) curl_easy_setopt(c,CURLOPT_##o,v)
 
