@@ -2,3 +2,4 @@ LIBRARY
 EXPORTS
 	cpost
 	cget
+	set_verbose

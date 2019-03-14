@@ -3,9 +3,29 @@
 //{x set`:./curl 2:x,y}'[`cget`cpost;1 2]
 //cget"http://kx.com"
 //2019.03.13 - reformat source code
+//2019.03.14 - add support for custom query headers
 #include "./curl.h"
 
-#define so(c,o,v) curl_easy_setopt(c,CURLOPT_##o,v)
+volatile BOOL is_verbose = FALSE;
+
+/*
+ * @param x (Bool) verbose flag
+ */
+K set_verbose(K x) {
+	if (!x)
+		R krr("nil");
+	switch (xt) {
+	case -KB:
+		is_verbose = !!xg;
+		break;
+	case -KS:
+	case 101:
+		break;
+	default:
+		R krr("type");
+	}
+	R kb(is_verbose);
+}
 
 Z size_t wr(S p, size_t s, size_t n, V*d) {
 	K*x = d, y;
@@ -13,6 +33,8 @@ Z size_t wr(S p, size_t s, size_t n, V*d) {
 	r0(y);
 	R s*n;
 }
+
+#define so(c,o,v) curl_easy_setopt(c,CURLOPT_##o,v)
 
 /*
  * @param x (String) URL
@@ -22,10 +44,11 @@ K cpost(K x, K y) {
 	C e[CURL_ERROR_SIZE];
 	K r, a;
 	CURL*c;
-	if (xt != KC || y&&y->t != KC)
+	if (xt != KC || y && y->t != KC)
 		R krr("type");
 	if (!(c = curl_easy_init()))
 		R krr("curl");
+	so(c, VERBOSE, is_verbose);
 	r = ktn(KC, 0),
 	a = ktn(KC, xn + 1);
 	DO(xn, kC(a)[i] = kC(x)[i])
@@ -55,4 +78,3 @@ K cpost(K x, K y) {
 K cget(K x) {
 	R cpost(x, 0);
 }
-
