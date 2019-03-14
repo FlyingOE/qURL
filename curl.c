@@ -44,6 +44,28 @@ K dupCharList(K c) {
 	R d;
 }
 
+CURL *setupOpenSSL(CURL *c) {
+	K p, v;
+
+	p = k(0, "getenv`SSL_CA_CERT_PATH", NULL);
+	if (p && p->t == KC && p->n > 0) {
+		v = dupCharList(p);
+		so(c, CAPATH, kC(v));
+		r0(v);
+	}
+	r0(p);
+
+	p = k(0, "getenv`SSL_CA_CERT_FILE", NULL);
+	if (p && p->t == KC && p->n > 0) {
+		v = dupCharList(p);
+		so(c, CAINFO, kC(v));
+		r0(v);
+	}
+	r0(p);
+
+	R c;
+}
+
 /*
  * @param x (String) URL
  * @param h (StringList) List of custom headers
@@ -90,6 +112,8 @@ K cpost(K x, K h, K y) {
 #if 0
 	so(c, SSL_VERIFYPEER, 0L);
 	so(c, SSL_VERIFYHOST, 0L);
+#else
+	setupOpenSSL(c);
 #endif
 	so(c, WRITEFUNCTION, wr);
 	so(c, WRITEDATA, &r);
