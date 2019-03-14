@@ -44,6 +44,32 @@ K dupCharList(K c) {
 	R d;
 }
 
+struct curl_slist *buildCustomHeaders(K h, C *e, size_t en) {
+	BOOL ok = TRUE;
+	struct curl_slist *headers = NULL;
+	memset(e, '\0', en);
+	assert(h);
+	if (h->t != 0) {
+		strcpy_s(e, en, "type");
+		R headers;
+	}
+	assert(h->n >= 0);
+	DO(h->n, ok = ok && kK(h)[i] && kK(h)[i]->t == KC);
+	if (!ok) {
+		strcpy_s(e, en, "type");
+		R headers;
+	}
+	else {
+		J i = 0, _i = h->n;
+		for (; i < _i; ++i) {
+			K h1 = dupCharList(kK(h)[i]);
+			headers = curl_slist_append(headers, kC(h1));
+			r0(h1);
+		}
+		R headers;
+	}
+}
+
 CURL *setupOpenSSL(CURL *c) {
 	K p, v;
 
@@ -74,28 +100,17 @@ CURL *setupOpenSSL(CURL *c) {
 K cpost(K x, K h, K y) {
 	C e[CURL_ERROR_SIZE];
 	K r, a;
-	struct curl_slist *headers = NULL;
+	struct curl_slist *headers;
 	CURL *c;
 	if (xt != KC || y && y->t != KC)
 		R krr("type");
 	if (!(c = curl_easy_init()))
 		R krr("curl");
 	so(c, VERBOSE, is_verbose);
-	assert(h);
-	if (h->t != 0)
-		R krr("type");
-	assert(h->n >= 0);
-	BOOL ok = TRUE;
-	DO(h->n, ok = ok && kK(h)[i] && kK(h)[i]->t == KC);
-	if (!ok)
-		R krr("type");
-	else {
-		J i = 0, _i = h->n;
-		for (; i < _i; ++i) {
-			K header = dupCharList(kK(h)[i]);
-			headers = curl_slist_append(headers, kC(header));
-			r0(header);
-		}
+	headers = buildCustomHeaders(h, e, _countof(e));
+	if (strlen(e) > 0) {
+		assert(!headers);
+		R krr(e);
 	}
 	so(c, HTTPHEADER, headers);
 	r = ktn(KC, 0);
