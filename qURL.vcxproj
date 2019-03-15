@@ -104,9 +104,9 @@
       <ModuleDefinitionFile>curl.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY lib\*.crt $(TargetDir) /I /Y
-XCOPY lib\$(PlatformTarget)\*.dll $(TargetDir) /I /Y
-XCOPY lib\$(PlatformTarget)\*.exe $(TargetDir) /I /Y</Command>
+      <Command>XCOPY lib\$(PlatformTarget)\curl\*.crt $(TargetDir) /I /Y
+XCOPY lib\$(PlatformTarget)\curl\*.dll $(TargetDir) /I /Y
+XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y</Command>
       <Message>Copy EXEs/DLLs/etc. to target directory</Message>
     </PostBuildEvent>
     <PreLinkEvent>
@@ -132,9 +132,9 @@ XCOPY lib\$(PlatformTarget)\*.exe $(TargetDir) /I /Y</Command>
       <ModuleDefinitionFile>curl.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY lib\*.crt $(TargetDir) /I /Y
-XCOPY lib\$(PlatformTarget)\*.dll $(TargetDir) /I /Y
-XCOPY lib\$(PlatformTarget)\*.exe $(TargetDir) /I /Y</Command>
+      <Command>XCOPY lib\$(PlatformTarget)\curl\*.crt $(TargetDir) /I /Y
+XCOPY lib\$(PlatformTarget)\curl\*.dll $(TargetDir) /I /Y
+XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y</Command>
       <Message>Copy EXEs/DLLs/etc. to target directory</Message>
     </PostBuildEvent>
     <PreLinkEvent>
@@ -163,9 +163,9 @@ XCOPY lib\$(PlatformTarget)\*.exe $(TargetDir) /I /Y</Command>
       <ModuleDefinitionFile>curl.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY lib\*.crt $(TargetDir) /I /Y
-XCOPY lib\$(PlatformTarget)\*.dll $(TargetDir) /I /Y
-XCOPY lib\$(PlatformTarget)\*.exe $(TargetDir) /I /Y</Command>
+      <Command>XCOPY lib\$(PlatformTarget)\curl\*.crt $(TargetDir) /I /Y
+XCOPY lib\$(PlatformTarget)\curl\*.dll $(TargetDir) /I /Y
+XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y</Command>
       <Message>Copy EXEs/DLLs/etc. to target directory</Message>
     </PostBuildEvent>
     <PreLinkEvent>
@@ -194,9 +194,9 @@ XCOPY lib\$(PlatformTarget)\*.exe $(TargetDir) /I /Y</Command>
       <ModuleDefinitionFile>curl.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY lib\*.crt $(TargetDir) /I /Y
-XCOPY lib\$(PlatformTarget)\*.dll $(TargetDir) /I /Y
-XCOPY lib\$(PlatformTarget)\*.exe $(TargetDir) /I /Y</Command>
+      <Command>XCOPY lib\$(PlatformTarget)\curl\*.crt $(TargetDir) /I /Y
+XCOPY lib\$(PlatformTarget)\curl\*.dll $(TargetDir) /I /Y
+XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y</Command>
       <Message>Copy EXEs/DLLs/etc. to target directory</Message>
     </PostBuildEvent>
     <PreLinkEvent>

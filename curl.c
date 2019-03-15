@@ -27,6 +27,9 @@ K set_verbose(K x) {
 	R kb(is_verbose);
 }
 
+#define so(c,o,v) curl_easy_setopt(c,CURLOPT_##o,v)
+
+// HTTP response body write callback
 Z size_t wr(S p, size_t s, size_t n, V*d) {
 	K*x = d, y;
 	jv(x, y = kpn(p, s*n));
@@ -34,58 +37,88 @@ Z size_t wr(S p, size_t s, size_t n, V*d) {
 	R s*n;
 }
 
-#define so(c,o,v) curl_easy_setopt(c,CURLOPT_##o,v)
-
-// Dup a q string into a NULL-terminated C string.
-K dupCharList(K c) {
+// Duplicate a q string (no terminator) into a NULL-terminated C string.
+C *dupCharList(K c) {
+	errno_t error;
 	assert(c && c->t == KC && c->n >= 0);
-	K d = kpn(kC(c), c->n + 1);	//make sure string is terminated
-	kC(d)[c->n] = '\0';
-	R d;
+	const size_t n = (size_t)c->n;
+	C *buffer = (C*)malloc(n + 1);
+	assert(buffer);
+	error = memcpy_s(buffer, n + 1, kC(c), n);
+	assert(!error);
+	buffer[n] = '\0';
+	R buffer;
 }
 
-struct curl_slist *buildCustomHeaders(K h, C *e, size_t en) {
-	BOOL ok = TRUE;
+// Special handling for "Accept-Encoding" header
+BOOL handleAcceptEncoding(CURL *c, const S header) {
+	Z const S tag = "ACCEPT-ENCODING:";
+	C h[(6 + 1 + 8) + 1 + 1];	//length of `tag'+1
+	size_t i, ws;
+	BOOL handled;
+	if (strlen(header) < _countof(h)) {
+		R FALSE;
+	}
+	for (i = 0; i < _countof(h); ++i) {
+		h[i] = toupper(header[i]);
+	}
+	h[_countof(h) - 1] = '\0';
+	if (handled = strcmp(tag, h) == 0) {
+		ws = strspn(header + strlen(tag), " \t");
+		so(c, ACCEPT_ENCODING, header + strlen(tag) + ws);
+	}
+	R handled;
+}
+
+// Build custom headers list for libcurl
+struct curl_slist *buildCustomHeaders(K h, CURL *c, C *e, size_t en) {
 	struct curl_slist *headers = NULL;
+	BOOL ok;
+	J i;
 	memset(e, '\0', en);
 	assert(h);
 	if (h->t != 0) {
-		strcpy_s(e, en, "type");
+		errno_t error = strcpy_s(e, en, "type");
+		assert(!error);
 		R headers;
 	}
 	assert(h->n >= 0);
-	DO(h->n, ok = ok && kK(h)[i] && kK(h)[i]->t == KC);
+	for (ok = TRUE, i = 0; i < h->n; ++i) {
+		ok = ok && kK(h)[i] && kK(h)[i]->t == KC;
+	}
 	if (!ok) {
-		strcpy_s(e, en, "type");
+		errno_t error = strcpy_s(e, en, "type");
+		assert(!error);
 		R headers;
 	}
-	else {
-		J i = 0, _i = h->n;
-		for (; i < _i; ++i) {
-			K h1 = dupCharList(kK(h)[i]);
-			headers = curl_slist_append(headers, kC(h1));
-			r0(h1);
+	for (i = 0; i < h->n; ++i) {
+		S h1 = dupCharList(kK(h)[i]);
+		if (!handleAcceptEncoding(c, h1)) {
+			headers = curl_slist_append(headers, h1);
 		}
-		R headers;
+		free(h1);
 	}
+	R headers;
 }
 
+// Setup libcurl options for OpenSSL
 CURL *setupOpenSSL(CURL *c) {
-	K p, v;
+	C* buffer;
+	K p;
 
 	p = k(0, "getenv`SSL_CA_CERT_PATH", NULL);
 	if (p && p->t == KC && p->n > 0) {
-		v = dupCharList(p);
-		so(c, CAPATH, kC(v));
-		r0(v);
+		buffer = dupCharList(p);
+		so(c, CAPATH, buffer);
+		free(buffer);
 	}
 	r0(p);
 
 	p = k(0, "getenv`SSL_CA_CERT_FILE", NULL);
 	if (p && p->t == KC && p->n > 0) {
-		v = dupCharList(p);
-		so(c, CAINFO, kC(v));
-		r0(v);
+		buffer = dupCharList(p);
+		so(c, CAINFO, buffer);
+		free(buffer);
 	}
 	r0(p);
 
@@ -107,7 +140,7 @@ K cpost(K x, K h, K y) {
 	if (!(c = curl_easy_init()))
 		R krr("curl");
 	so(c, VERBOSE, is_verbose);
-	headers = buildCustomHeaders(h, e, _countof(e));
+	headers = buildCustomHeaders(h, c, e, _countof(e));
 	if (strlen(e) > 0) {
 		assert(!headers);
 		R krr(e);
