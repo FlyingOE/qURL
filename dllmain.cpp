@@ -11,11 +11,20 @@
 
 //@see http://pages.cs.wisc.edu/~tlabonne/memleak.html
 #include "CrtDbg.h"
-void activateMemoryLeakChecks() {
+void activateMemoryLeakChecks(void) {
 #	ifndef NDEBUG
-	int flags = ::_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
+#	ifndef _CRTDBG_MAP_ALLOC
+#		pragma message("Define _CRTDBG_MAP_ALLOC for more detailed CRT memory leak report!")
+#	endif
+	int flags = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
 	flags |= _CRTDBG_LEAK_CHECK_DF;
-	::_CrtSetDbgFlag(flags);
+	_CrtSetDbgFlag(flags);
+#	endif
+}
+
+void reportMemoryLeaks(void) {
+#	ifndef NDEBUG
+	_CrtDumpMemoryLeaks();
 #	endif
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -40,6 +49,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 		break;
 	case DLL_PROCESS_DETACH:
 		m9();
+		reportMemoryLeaks();
 		break;
 	}
 	return TRUE;
