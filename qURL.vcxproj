@@ -94,19 +94,21 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRTDBG_MAP_ALLOC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\q_Wind\inc\q\;$(SolutionDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\q_Wind\inc\q\;$(SolutionDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\q_Wind\lib\q\$(PlatformTarget)\;$(SolutionDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\q_Wind\lib\q\$(PlatformTarget)\;$(SolutionDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>curl.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>XCOPY lib\$(PlatformTarget)\curl\*.crt $(TargetDir) /I /Y
 XCOPY lib\$(PlatformTarget)\curl\*.dll $(TargetDir) /I /Y
-XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y</Command>
+XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y
+
+IF EXIST $(SolutionDir)..\COPY_qURL.bat CALL $(SolutionDir)..\COPY_qURL.bat $(TargetDir)</Command>
       <Message>Copy EXEs/DLLs/etc. to target directory</Message>
     </PostBuildEvent>
     <PreLinkEvent>
@@ -122,19 +124,21 @@ XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y</Command>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;_CRTDBG_MAP_ALLOC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\q_Wind\inc\q\;$(SolutionDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\q_Wind\inc\q\;$(SolutionDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\q_Wind\lib\q\$(PlatformTarget)\;$(SolutionDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\q_Wind\lib\q\$(PlatformTarget)\;$(SolutionDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>curl.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>XCOPY lib\$(PlatformTarget)\curl\*.crt $(TargetDir) /I /Y
 XCOPY lib\$(PlatformTarget)\curl\*.dll $(TargetDir) /I /Y
-XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y</Command>
+XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y
+
+IF EXIST $(SolutionDir)..\COPY_qURL.bat CALL $(SolutionDir)..\COPY_qURL.bat $(TargetDir)</Command>
       <Message>Copy EXEs/DLLs/etc. to target directory</Message>
     </PostBuildEvent>
     <PreLinkEvent>
@@ -152,20 +156,22 @@ XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\q_Wind\inc\q\;$(SolutionDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\q_Wind\inc\q\;$(SolutionDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\q_Wind\lib\q\$(PlatformTarget)\;$(SolutionDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\q_Wind\lib\q\$(PlatformTarget)\;$(SolutionDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>curl.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>XCOPY lib\$(PlatformTarget)\curl\*.crt $(TargetDir) /I /Y
 XCOPY lib\$(PlatformTarget)\curl\*.dll $(TargetDir) /I /Y
-XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y</Command>
+XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y
+
+IF EXIST $(SolutionDir)..\COPY_qURL.bat CALL $(SolutionDir)..\COPY_qURL.bat $(TargetDir)</Command>
       <Message>Copy EXEs/DLLs/etc. to target directory</Message>
     </PostBuildEvent>
     <PreLinkEvent>
@@ -183,20 +189,22 @@ XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\q_Wind\inc\q\;$(SolutionDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\q_Wind\inc\q\;$(SolutionDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\q_Wind\lib\q\$(PlatformTarget)\;$(SolutionDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\q_Wind\lib\q\$(PlatformTarget)\;$(SolutionDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>curl.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>XCOPY lib\$(PlatformTarget)\curl\*.crt $(TargetDir) /I /Y
 XCOPY lib\$(PlatformTarget)\curl\*.dll $(TargetDir) /I /Y
-XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y</Command>
+XCOPY lib\$(PlatformTarget)\curl\*.exe $(TargetDir) /I /Y
+
+IF EXIST $(SolutionDir)..\COPY_qURL.bat CALL $(SolutionDir)..\COPY_qURL.bat $(TargetDir)</Command>
       <Message>Copy EXEs/DLLs/etc. to target directory</Message>
     </PostBuildEvent>
     <PreLinkEvent>
