@@ -106,7 +106,7 @@ CURL *setupOpenSSL(CURL *c) {
 	C* buffer;
 	K p;
 
-	p = k(0, "getenv`SSL_CA_CERT_PATH", NULL);
+	p = k(0, "getenv`SSL_CERT_DIR", NULL);
 	if (p && p->t == KC && p->n > 0) {
 		buffer = dupCharList(p);
 		so(c, CAPATH, buffer);
@@ -114,10 +114,18 @@ CURL *setupOpenSSL(CURL *c) {
 	}
 	r0(p);
 
-	p = k(0, "getenv`SSL_CA_CERT_FILE", NULL);
+	p = k(0, "getenv`SSL_CERT_FILE", NULL);
 	if (p && p->t == KC && p->n > 0) {
 		buffer = dupCharList(p);
 		so(c, CAINFO, buffer);
+		free(buffer);
+	}
+	r0(p);
+
+	p = k(0, "getenv`SSL_VERIFY_PEER", NULL);
+	if (p && p->t == KC && p->n > 0) {
+		buffer = dupCharList(p);
+		so(c, SSL_VERIFYPEER, atoi(buffer));
 		free(buffer);
 	}
 	r0(p);
