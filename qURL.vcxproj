@@ -132,6 +132,9 @@ IF EXIST $(SolutionDir)..\COPY_qURL.bat CALL $(SolutionDir)..\COPY_qURL.bat $(Ta
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\q_Wind\lib\q\$(PlatformTarget)\;$(SolutionDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>curl.def</ModuleDefinitionFile>
+      <OutputFile>$(OutDir)$(TargetName)-x64$(TargetExt)</OutputFile>
+      <ImportLibrary>$(OutDir)$(TargetName)-x64.lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName)-x64.pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
       <Command>XCOPY lib\$(PlatformTarget)\curl\*.crt $(TargetDir) /I /Y
@@ -198,6 +201,9 @@ IF EXIST $(SolutionDir)..\COPY_qURL.bat CALL $(SolutionDir)..\COPY_qURL.bat $(Ta
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\q_Wind\lib\q\$(PlatformTarget)\;$(SolutionDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>curl.def</ModuleDefinitionFile>
+      <OutputFile>$(OutDir)$(TargetName)-x64$(TargetExt)</OutputFile>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName)-x64.pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(OutDir)$(TargetName)-x64.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
       <Command>XCOPY lib\$(PlatformTarget)\curl\*.crt $(TargetDir) /I /Y

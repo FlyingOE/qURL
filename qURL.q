@@ -1,7 +1,7 @@
 / @see curl.c
 \d .curl
 
-DLL:`:qURL
+DLL:hsym`$"qURL",$[.z.o like"*64";"-x64";""]
 
 / verbose flag
 /q) .curl.verbose[]		//get current value
